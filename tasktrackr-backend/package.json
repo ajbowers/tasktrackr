@@ -1,21 +1,28 @@
 {
-	"name": "tasktrackr-backend",
-	"version": "0.1.0",
-	"private": true,
-	"main": "dist/index.js",
-	"scripts": {
-		"watch": "noderize-scripts watch",
-		"build": "noderize-scripts build",
-		"start": "noderize-scripts start",
-		"format": "noderize-scripts format",
-		"test": "noderize-scripts test",
-		"lint": "noderize-scripts lint",
-		"clean": "noderize-scripts clean"
-	},
-	"devDependencies": {
-		"@noderize/scripts": "^0.7.3"
-	},
-	"dependencies": {
-		"@noderize/runtime": "^0.7.3"
-	}
+  "name": "tasktrackr-backend",
+  "version": "1.0.0",
+  "description": "Backend API providing CRUD functionality for the tasktrackr",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajbowers/tasktrackr.git"
+  },
+  "author": "Andrew Bowers",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajbowers/tasktrackr/issues"
+  },
+  "homepage": "https://github.com/ajbowers/tasktrackr#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongodb": "^2.2.16",
+    "password-hash": "^1.2.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.3"
+  }
 }
