@@ -1,7 +1,13 @@
 var ObjectID = require('mongodb').ObjectID;
 var passwordHash = require('password-hash');
+var express = require('express');
+var cors = require('cors');
+var bodyParser = require('body-parser');
+
+
 
 module.exports = function (app, db) {
+    app.use(cors());
     const collection =
     /*  
      API for user creation and user auth
@@ -19,7 +25,7 @@ module.exports = function (app, db) {
             //username as sole unqiue identifier
             username: req.body.username 
         }).toArray(function (err, result) {
-            if (result.length == 0) {
+            if (result.length == 0) { 
                 db.collection('users').insert(user, (err, result) => {
                     if (err) {
                         res.send({
@@ -34,30 +40,35 @@ module.exports = function (app, db) {
                     'error': 'Account with this username already exists. Please use another name'
                 });
             }
-        });
+        }); 
     });
 
     /**
      *  Checks if user has an account, and authorizes it with input password vs hashed pass in db
      */
     app.post('/user/auth', (req, res) => {
+        console.log(req.body.username);
         db.collection('users').find({
             // username exists as sole unique id and is used for auth along with hashed password
             username: req.body.username
         }).toArray(function (err, result) {
+            console.log(req.body);
             if (err) {
                 res.send({
                     'error': 'error happened bro'
                 });
             } else if (result[0] != null) {
                 if (passwordHash.verify(req.body.password, result[0].password)) {
+                    res.status(200)
                     res.send(result[0]);
                 } else {
+                    res.status(401);
                     res.send({
                         'error': "username or password do not match"
                     });
                 }
             } else {
+                res.status(401);
                 res.send({
                     'error': "username or password do not match"
                 });
@@ -110,6 +121,7 @@ module.exports = function (app, db) {
     // Fetch existing tasks by Owner
     app.get('/fetch/owner/:owner', (req, res) => {
         const owner_name = req.params.owner;
+        console.log(owner_name);
         db.collection('tasks').find({
             owner: {
                 $eq: owner_name
@@ -120,6 +132,7 @@ module.exports = function (app, db) {
                     'error': 'error happened bro'
                 });
             } else {
+                console.log(result)
                 res.send(result);
             }
         });
