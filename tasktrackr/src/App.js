@@ -1,27 +1,33 @@
 import React, { Component } from 'react';
 import './App.css';
 import Tasks from './tasks/tasks.js';
-import Account from './account/account.js';
 import Home from './home/home.js';
-import Navbar from './navbar/navbar.js';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { createMuiTheme } from '@material-ui/core/styles';
+import { lightBlue } from '@material-ui/core/colors/purple';
 
 import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom'
-
+const header = createMuiTheme({
+  palette: {
+      primary: lightBlue
+  },
+});
 class App extends Component {
   render() {
     return (
+      <MuiThemeProvider theme={header}>
       <Router>
       <div className="Body">
         <div className="App">
           <Route exact path="/" component={Home} />
           <Route path="/tasks" component={Tasks}/>
-          <Route path="/account" component={Account} />
         </div>
       </div>
       </Router>
+      </MuiThemeProvider>
     );
   }
 }

@@ -47,12 +47,10 @@ module.exports = function (app, db) {
      *  Checks if user has an account, and authorizes it with input password vs hashed pass in db
      */
     app.post('/user/auth', (req, res) => {
-        console.log(req.body.username);
         db.collection('users').find({
             // username exists as sole unique id and is used for auth along with hashed password
             username: req.body.username
         }).toArray(function (err, result) {
-            console.log(req.body);
             if (err) {
                 res.send({
                     'error': 'error happened bro'
@@ -81,6 +79,7 @@ module.exports = function (app, db) {
      */
     // Create a New task  
     app.post('/task', (req, res) => {
+        console.log(req.body);
         const task = {
             name: req.body.name,
             descrip: req.body.descrip,
@@ -98,7 +97,6 @@ module.exports = function (app, db) {
                 res.send(result.ops[0]);
             }
         });
-        res.send('create')
     });
 
     // Fetch existing tasks by task ID
@@ -121,7 +119,6 @@ module.exports = function (app, db) {
     // Fetch existing tasks by Owner
     app.get('/fetch/owner/:owner', (req, res) => {
         const owner_name = req.params.owner;
-        console.log(owner_name);
         db.collection('tasks').find({
             owner: {
                 $eq: owner_name
@@ -132,7 +129,6 @@ module.exports = function (app, db) {
                     'error': 'error happened bro'
                 });
             } else {
-                console.log(result)
                 res.send(result);
             }
         });
@@ -157,7 +153,7 @@ module.exports = function (app, db) {
         const details = { '_id': new ObjectID(id) };
         const task = {
             name: req.body.name,
-            descrip: req.body.descrip,
+            descrip: req.body.descrip, 
             priority: req.body.priority,
             due_date: req.body.due_date,
             owner: req.body.owner,

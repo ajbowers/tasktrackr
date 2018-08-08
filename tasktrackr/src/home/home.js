@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
-import TaskView from '../tasks/tasks.js';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 
 class Home extends Component {
 	handleClick(event) {
 		console.log("inside click even")
 		var apiBaseUrl = "http://localhost:8000/";
-		var self = this;
 		const params = new URLSearchParams();
 		params.append('username', this.state.username);
 		params.append('password', this.state.password);
@@ -22,13 +19,13 @@ class Home extends Component {
 			method: 'post'
 		}).then((response) => {
 			this.setState({
-				redirect:true
+				redirect: true
 			});
 			localStorage.setItem('username', JSON.stringify(this.state.username));
 		}).catch((error) => {
 			console.log(error);
 			this.setState({
-				loginFail:true
+				loginFail: true
 			});
 		});
 	}
@@ -44,8 +41,8 @@ class Home extends Component {
 
 	render() {
 		const loginFail = this.state.loginFail;
-		const redirect  = this.state.redirect;
-		
+		const redirect = this.state.redirect;
+
 		let message = "";
 		if (loginFail) {
 			message = "Login failed. Please check your username or password and try again."
@@ -55,30 +52,24 @@ class Home extends Component {
 		}
 		return (
 			<div>
-				 <div>
-					<MuiThemeProvider>
-						<div>
-							<AppBar
-								title="Login"
-							/>
-							<TextField
-								hintText="Enter your Username"
-								floatingLabelText="Username"
-								onChange={(event, newValue) => this.setState({ username: newValue })}
-							/>
-							<br />
-							<p style={failStyle} > {message} </p>
-							<TextField
-								type="password"
-								hintText="Enter your Password"
-								floatingLabelText="Password"
-								onChange={(event, newValue) => this.setState({ password: newValue })}
-							/>
-							<br />
-							<RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)} />
-						</div>
-					</MuiThemeProvider>
-				</div>
+				<AppBar
+					title="Login"
+				/>
+				<TextField
+					hintText="Enter your Username"
+					floatingLabelText="Username"
+					onChange={(event, newValue) => this.setState({ username: newValue })}
+				/>
+				<br />
+				<p style={failStyle} > {message} </p>
+				<TextField
+					type="password"
+					hintText="Enter your Password"
+					floatingLabelText="Password"
+					onChange={(event, newValue) => this.setState({ password: newValue })}
+				/>
+				<br />
+				< RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)} />
 			</div>
 		);
 	}
@@ -88,6 +79,6 @@ const style = {
 };
 const failStyle = {
 	color: "red",
-	
+
 };
 export default Home;

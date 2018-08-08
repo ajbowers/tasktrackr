@@ -1,0 +1,34 @@
+.critical {
+    background-color:#f6685e
+}
+
+.App { 
+    width: 60%;
+    margin:auto;
+}
+
+.taskBody { 
+    width: 100%;
+    margin: auto;
+}
+
+.criticalTasks { 
+ 
+    margin:auto;
+    color: #f6685e;
+    
+}
+
+.highTasks { 
+   
+    margin:auto;
+}
+
+.nullTasks {
+    
+    margin:auto;
+}
+.date {
+    float:right
+}
+
