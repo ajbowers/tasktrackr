@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Tasks from './tasks/tasks.js';
 import Home from './home/home.js';
+import Register from './register/register.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { lightBlue } from '@material-ui/core/colors/purple';
@@ -24,6 +25,8 @@ class App extends Component {
         <div className="App">
           <Route exact path="/" component={Home} />
           <Route path="/tasks" component={Tasks}/>
+          <Route path="/register" component={Register}/>
+          
         </div>
       </div>
       </Router>

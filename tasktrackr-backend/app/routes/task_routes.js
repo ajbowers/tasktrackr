@@ -25,7 +25,7 @@ module.exports = function (app, db) {
             //username as sole unqiue identifier
             username: req.body.username 
         }).toArray(function (err, result) {
-            if (result.length == 0) { 
+            if (result.length == 0 && req.body.username != "" && req.body.email != "" && req.body.password != "") { 
                 db.collection('users').insert(user, (err, result) => {
                     if (err) {
                         res.send({
@@ -37,7 +37,7 @@ module.exports = function (app, db) {
                 });
             } else { 
                 res.send({
-                    'error': 'Account with this username already exists. Please use another name'
+                    'msg': 'account_username_exists'
                 });
             }
         }); 

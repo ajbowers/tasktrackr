@@ -4,9 +4,15 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+import { Paper } from '@material-ui/core';
 
 
 class Home extends Component {
+	handleRegister() {
+		this.setState({
+			redirectToRegister: true
+		});
+	}
 	handleClick(event) {
 		console.log("inside click even")
 		var apiBaseUrl = "http://localhost:8000/";
@@ -18,10 +24,13 @@ class Home extends Component {
 			data: params,
 			method: 'post'
 		}).then((response) => {
+			console.log("login set user")
+			localStorage.setItem('username', JSON.stringify(this.state.username));
+			console.log(localStorage.username);
 			this.setState({
 				redirect: true
 			});
-			localStorage.setItem('username', JSON.stringify(this.state.username));
+			
 		}).catch((error) => {
 			console.log(error);
 			this.setState({
@@ -35,13 +44,15 @@ class Home extends Component {
 			username: '',
 			password: '',
 			loginFail: false,
-			redirect: false
+			redirect: false,
+			redirectToRegister: false
 		}
 	}
 
 	render() {
 		const loginFail = this.state.loginFail;
 		const redirect = this.state.redirect;
+		const redirectToRegister = this.state.redirectToRegister;
 
 		let message = "";
 		if (loginFail) {
@@ -50,7 +61,11 @@ class Home extends Component {
 		if (redirect) {
 			return <Redirect to="/tasks" />;
 		}
+		if (redirectToRegister) {
+			return <Redirect to="/register" />;
+		}
 		return (
+			<Paper>
 			<div>
 				<AppBar
 					title="Login"
@@ -69,8 +84,10 @@ class Home extends Component {
 					onChange={(event, newValue) => this.setState({ password: newValue })}
 				/>
 				<br />
-				< RaisedButton label="Submit" primary={true} style={style} onClick={(event) => this.handleClick(event)} />
+				< RaisedButton label="Register Account" variant="outlined" style={style} onClick={(event) => this.handleRegister(event)} />
+				< RaisedButton label="LOGIN" primary={true} style={style} onClick={(event) => this.handleClick(event)} />
 			</div>
+			</Paper>
 		);
 	}
 }
